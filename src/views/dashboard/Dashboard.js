@@ -4,14 +4,16 @@ import {
   CCardBody,
   CCardHeader,
 } from '@coreui/react'
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
-import geoJson from './tes.json';
+import mapData from '../../data/MapData';
 
 function Dashboard() {
+  const maps = mapData.map((item) => {
+    return <GeoJSON key={item.features[0].properties.WADMKC} data={item} />
+  })
   return (
     <>
-    {console.log(geoJson)}
       <CCard>
         <CCardHeader>
           Peta Tingkat Kerawanan Tuberkulosis
@@ -19,7 +21,7 @@ function Dashboard() {
         <CCardBody>
           <div id="mapid">
             <MapContainer
-              center={[-6.8895, 111.8999]}
+              center={[-6.9575, 111.8999]}
               zoom={10}
               style={{ height: '70vh', width: '100wh' }}
             >
@@ -27,6 +29,7 @@ function Dashboard() {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
+            {maps}
             </MapContainer>
           </div>
         </CCardBody>
