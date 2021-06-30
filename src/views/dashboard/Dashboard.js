@@ -10,7 +10,14 @@ import mapData from '../../data/MapData';
 
 function Dashboard() {
   const maps = mapData.map((item) => {
-    return <GeoJSON key={item.features[0].properties.WADMKC} data={item} />
+    return <GeoJSON key={item.features[0].properties.Kecamatan} data={item}
+      style={
+        {
+          "color": "#227800",
+          "weight": 2,
+          "opacity": 0.65
+        }
+      } />
   })
   return (
     <>
@@ -29,7 +36,7 @@ function Dashboard() {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-            {maps}
+              {maps}
             </MapContainer>
           </div>
         </CCardBody>

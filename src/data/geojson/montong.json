@@ -3,14 +3,9 @@
     {
       "type": "Feature",
       "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 0.5,
-        "fill": "#f5e400",
-        "fill-opacity": 0.3,
-        "WADMKC": "MONTONG",
-        "WADMKK": "TUBAN",
-        "WADMPR": "JAWA TIMUR"
+        "Kecamatan": "Montong",
+        "Kota": "Tuban",
+        "Provinsi": "Jawa Timur"
       },
       "geometry": {
         "type": "MultiPolygon",

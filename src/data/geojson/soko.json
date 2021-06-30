@@ -3,14 +3,9 @@
     {
       "type": "Feature",
       "properties": {
-        "stroke": "#555555",
-        "stroke-width": 2,
-        "stroke-opacity": 0.5,
-        "fill": "#22b14c",
-        "fill-opacity": 0.2,
-        "WADMKC": "SOKO",
-        "WADMKK": "TUBAN",
-        "WADMPR": "JAWA TIMUR"
+        "Kecamatan": "Soko",
+        "Kota": "Tuban",
+        "Provinsi": "Jawa Timur"
       },
       "geometry": {
         "type": "MultiPolygon",
