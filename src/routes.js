@@ -8,15 +8,15 @@ const TotalCase = React.lazy(() => import('./views/data-tuberkulosis/total-case/
 const Info = React.lazy(() => import('./views/info/info-tuberkulosis/Index'));
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/tuberkulosis', name: 'Data Tuberkulosis', component: TotalCase, exact: true },
-  { path: '/tuberkulosis/jumlah-kasus', name: 'Jumlah Kasus', component: TotalCase },
-  { path: '/tuberkulosis/kepadatan-penduduk', name: 'Kepadatan Penduduk', component: Density },
-  { path: '/tuberkulosis/angka-target', name: 'Angka Target', component: TargetCase },
-  { path: '/tuberkulosis/angka-kematian', name: 'Angka Kematian', component: DeathRate },
-  { path: '/info', name: 'Info', component: Info, exact: true },
-  { path: '/info/info-tuberkulosis', name: 'Info Tuberkulois', component: Info },
+  { path: '/admin/', exact: true, name: 'Home' },
+  { path: '/admin/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/admin/tuberkulosis', name: 'Data Tuberkulosis', component: TotalCase, exact: true },
+  { path: '/admin/tuberkulosis/jumlah-kasus', name: 'Jumlah Kasus', component: TotalCase },
+  { path: '/admin/tuberkulosis/kepadatan-penduduk', name: 'Kepadatan Penduduk', component: Density },
+  { path: '/admin/tuberkulosis/angka-target', name: 'Angka Target', component: TargetCase },
+  { path: '/admin/tuberkulosis/angka-kematian', name: 'Angka Kematian', component: DeathRate },
+  { path: '/admin/info', name: 'Info', component: Info, exact: true },
+  { path: '/admin/info/info-tuberkulosis', name: 'Info Tuberkulois', component: Info },
 ];
 
 export default routes;

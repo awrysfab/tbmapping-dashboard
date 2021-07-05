@@ -6,7 +6,7 @@ export default [
   {
     _tag: 'CSidebarNavItem',
     name: 'Dashboard',
-    to: '/dashboard',
+    to: '/admin/dashboard',
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>,
   },
   {
@@ -22,22 +22,22 @@ export default [
       {
         _tag: 'CSidebarNavItem',
         name: 'Jumlah Kasus',
-        to: '/tuberkulosis/jumlah-kasus',
+        to: '/admin/tuberkulosis/jumlah-kasus',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Angka Target',
-        to: '/tuberkulosis/angka-target',
+        to: '/admin/tuberkulosis/angka-target',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Kepadatan penduduk',
-        to: '/tuberkulosis/kepadatan-penduduk',
+        to: '/admin/tuberkulosis/kepadatan-penduduk',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Angka Kematian',
-        to: '/tuberkulosis/angka-kematian',
+        to: '/admin/tuberkulosis/angka-kematian',
       },
     ],
   },
@@ -50,7 +50,7 @@ export default [
       {
         _tag: 'CSidebarNavItem',
         name: 'Info Tuberkulosis',
-        to: '/info/info-tuberkulosis',
+        to: '/admin/info/info-tuberkulosis',
       },
     ],
   },
