@@ -7,8 +7,9 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { removeToken } from 'src/utils/LocalStorage'
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (props) => {
   return (
     <CDropdown
       inNav
@@ -37,7 +38,13 @@ const TheHeaderDropdown = () => {
           <CIcon name="cil-user" className="mfe-2" /> 
           Profil
         </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem onClick={
+          () => {
+            props.history.push('/login');
+            removeToken();
+            window.location.reload();
+          }
+        }>
           <CIcon name="cil-x" className="mfe-2" /> 
           Logout
         </CDropdownItem>

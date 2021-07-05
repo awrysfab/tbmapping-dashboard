@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
-import { getToken } from './utils/LocalStorage';
+import { PublicRoute, PrivateRoute } from './utils/RedirectRoute';
+import TheLayout from './containers/TheLayout';
+import Login from './views/pages/login/Login';
+import Page404 from './views/pages/page404/Page404';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -9,25 +12,21 @@ const loading = (
   </div>
 )
 
-// Containers
-const TheLayout = React.lazy(() => import('./containers/TheLayout'));
-
-// Pages
-const Login = React.lazy(() => import('./views/pages/login/Login'));
-const Page404 = React.lazy(() => import('./views/pages/page404/Page404'));
-
 class App extends Component {
 
   render() {
     return (
       <HashRouter>
-          <React.Suspense fallback={loading}>
-            <Switch>
-              <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
-              <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
-              <Route path="/admin" name="Home" render={props => <TheLayout {...props}/>} />
-            </Switch>
-          </React.Suspense>
+        <React.Suspense fallback={loading}>
+          <Switch>
+            {/* <PublicRoute exact path="/login" name="Login Page" render={props => <Login {...props} />} /> */}
+            <Route exact path="/404" name="Page 404" render={props => <Page404 {...props} />} />
+            {/* <Route path="/admin" name="Home" render={props => <TheLayout {...props} />} /> */}
+
+            <PublicRoute exact path="/login" name="Login Page" component={Login} />
+            <PrivateRoute path="/admin" name="Home" component={TheLayout} />
+          </Switch>
+        </React.Suspense>
       </HashRouter>
     );
   }
