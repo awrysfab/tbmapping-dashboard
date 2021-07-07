@@ -11,7 +11,7 @@ import {
   CButton
 } from '@coreui/react';
 
-const TBDeathRate = () => {
+const TBIndex = () => {
   const [clusterAttributes, setClusterAttributes] = useState([]);
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(null);
@@ -39,12 +39,15 @@ const TBDeathRate = () => {
   }
 
   const fields = [
-    { key: 'year', },
+    { key: 'year', _style: { width: '10%' } },
     { key: 'subdistrict' },
-    { key: 'death_rate' },
+    { key: 'case', _style: { width: '10%' } },
+    { key: 'target_case', _style: { width: '10%' } },
+    { key: 'death_rate', _style: { width: '10%' } },
+    { key: 'density', _style: { width: '10%' } },
     {
       key: 'options',
-      _style: { width: '15%' },
+      _style: { width: '10%' },
       sorter: false,
       filter: false
     }
@@ -54,7 +57,7 @@ const TBDeathRate = () => {
     <>
       <CCard>
         <CCardHeader>
-          Data Angka Kematian
+          Data Tuberkulosis
         </CCardHeader>
         <CCardBody>
           <CDataTable
@@ -114,4 +117,4 @@ const TBDeathRate = () => {
   )
 }
 
-export default TBDeathRate
+export default TBIndex

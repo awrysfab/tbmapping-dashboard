@@ -21,6 +21,11 @@ export default [
     _children: [
       {
         _tag: 'CSidebarNavItem',
+        name: 'Index',
+        to: '/admin/tuberkulosis/index',
+      },
+      {
+        _tag: 'CSidebarNavItem',
         name: 'Jumlah Kasus',
         to: '/admin/tuberkulosis/jumlah-kasus',
       },
