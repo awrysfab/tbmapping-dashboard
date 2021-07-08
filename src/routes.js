@@ -7,6 +7,7 @@ const Density = React.lazy(() => import('./views/data-tuberkulosis/density/Index
 const TargetCase = React.lazy(() => import('./views/data-tuberkulosis/target-case/Index'));
 const TotalCase = React.lazy(() => import('./views/data-tuberkulosis/total-case/Index'));
 const Info = React.lazy(() => import('./views/info/info-tuberkulosis/Index'));
+const HealthFacility = React.lazy(() => import('./views/info/info-health-facility/Index'));
 
 const routes = [
   { path: '/admin/', exact: true, name: 'Home' },
@@ -19,6 +20,7 @@ const routes = [
   { path: '/admin/tuberkulosis/angka-kematian', name: 'Angka Kematian', component: DeathRate },
   { path: '/admin/info', name: 'Info', component: Info, exact: true },
   { path: '/admin/info/info-tuberkulosis', name: 'Info Tuberkulois', component: Info },
+  { path: '/admin/info/fasilitas-kesehatan', name: 'Fasilitas Kesehatan', component: HealthFacility },
 ];
 
 export default routes;

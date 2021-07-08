@@ -11,8 +11,8 @@ import {
   CButton
 } from '@coreui/react';
 
-const TBIndex = () => {
-  const [clusterAttributes, setClusterAttributes] = useState([]);
+const TBInfo = () => {
+  const [healthFacilities, setHealthFacilities] = useState([]);
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(null);
   const [details, setDetails] = useState([])
@@ -28,30 +28,29 @@ const TBIndex = () => {
   }
 
   useEffect(() => {
-    fetchClusterAttribute();
+    fetchHealthFacilities();
   }, []);
 
-  async function fetchClusterAttribute() {
-    const result = await axios.get(`${API_URL}/cluster-attributes`, {
+  async function fetchHealthFacilities() {
+    const result = await axios.get(`${API_URL}/health-facilities`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
-    setClusterAttributes(result.data.data);
+    setHealthFacilities(result.data.data);
   }
 
-  async function deleteClusterAttribute(id) {
-    const result = await axios.delete(`${API_URL}/cluster-attributes/${id}`, {
+  async function deleteHealthFacilities(id) {
+    const result = await axios.delete(`${API_URL}/health-facilities/${id}`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
     window.location.reload();
   }
 
   const fields = [
-    { key: 'year', _style: { width: '10%' } },
-    { key: 'subdistrict' },
-    { key: 'case', _style: { width: '10%' } },
-    { key: 'target_case', _style: { width: '10%' } },
-    { key: 'death_rate', _style: { width: '10%' } },
-    { key: 'density', _style: { width: '10%' } },
+    { key: 'name', _style: { width: '20%' } },
+    { key: 'address' },
+    { key: 'subdistrict', _style: { width: '15%' } },
+    { key: 'latitude', _style: { width: '5%' }, label: 'lat' },
+    { key: 'longitude', _style: { width: '5%' }, label: 'long' },
     {
       key: 'options',
       _style: { width: '10%' },
@@ -64,11 +63,12 @@ const TBIndex = () => {
     <>
       <CCard>
         <CCardHeader>
-          Data Tuberkulosis
+          Fasilitas Kesehatan
         </CCardHeader>
         <CCardBody>
+          {console.log(healthFacilities)}
           <CDataTable
-            items={clusterAttributes}
+            items={healthFacilities}
             fields={fields}
             itemsPerPageSelect
             itemsPerPage={10}
@@ -103,14 +103,13 @@ const TBIndex = () => {
                     <CCollapse show={details.includes(index)}>
                       <CCardBody>
                         <h4>
-                          Kecamatan {item.subdistrict.name}
+                          {item.name}
                         </h4>
-                        <p className="text-muted">Tahun {item.year}</p>
                         <CButton size="sm" color="info">
                           Edit
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1"
-                          onClick={() => { deleteClusterAttribute(item.id) }}
+                          onClick={() => { deleteHealthFacilities(item.id) }}
                         >
                           Delete
                         </CButton>
@@ -126,4 +125,4 @@ const TBIndex = () => {
   )
 }
 
-export default TBIndex
+export default TBInfo

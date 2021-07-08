@@ -57,6 +57,11 @@ export default [
         name: 'Info Tuberkulosis',
         to: '/admin/info/info-tuberkulosis',
       },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Fasilitas Kesehatan',
+        to: '/admin/info/fasilitas-kesehatan',
+      },
     ],
   },
 ]

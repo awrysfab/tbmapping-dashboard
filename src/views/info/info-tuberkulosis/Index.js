@@ -28,14 +28,21 @@ const TBInfo = () => {
   }
 
   useEffect(() => {
-    fetchClusterAttribute();
+    fetchTbInfos();
   }, []);
 
-  async function fetchClusterAttribute() {
+  async function fetchTbInfos() {
     const result = await axios.get(`${API_URL}/tb-infos`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
     settbInfos(result.data.data);
+  }
+
+  async function deleteTbInfos(id) {
+    const result = await axios.delete(`${API_URL}/tb-infos/${id}`, {
+      headers: { "Authorization": `Bearer ${getToken()}` }
+    })
+    window.location.reload();
   }
 
   const fields = [
@@ -53,7 +60,7 @@ const TBInfo = () => {
     <>
       <CCard>
         <CCardHeader>
-          Data Tuberkulosis
+          Info Tuberkulosis
         </CCardHeader>
         <CCardBody>
           <CDataTable
@@ -93,7 +100,9 @@ const TBInfo = () => {
                         <CButton size="sm" color="info">
                           Edit
                         </CButton>
-                        <CButton size="sm" color="danger" className="ml-1">
+                        <CButton size="sm" color="danger" className="ml-1" 
+                        onClick={() => { deleteTbInfos(item.id) }}
+                        >
                           Delete
                         </CButton>
                       </CCardBody>

@@ -37,6 +37,13 @@ const TBTargetCase = () => {
     })
     setClusterAttributes(result.data.data);
   }
+  
+  async function deleteClusterAttribute(id) {
+    const result = await axios.delete(`${API_URL}/cluster-attributes/${id}`, {
+      headers: { "Authorization": `Bearer ${getToken()}` }
+    })
+    window.location.reload();
+  }
 
   const fields = [
     { key: 'year', },
@@ -99,7 +106,9 @@ const TBTargetCase = () => {
                         <CButton size="sm" color="info">
                           Edit
                         </CButton>
-                        <CButton size="sm" color="danger" className="ml-1">
+                        <CButton size="sm" color="danger" className="ml-1"
+                          onClick={() => { deleteClusterAttribute(item.id) }}
+                        >
                           Delete
                         </CButton>
                       </CCardBody>
