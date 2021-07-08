@@ -8,7 +8,11 @@ import {
   CCardHeader,
   CDataTable,
   CCollapse,
-  CButton
+  CButton,
+  CModal,
+  CModalBody,
+  CModalHeader,
+  CModalFooter
 } from '@coreui/react';
 
 const TBInfo = () => {
@@ -25,6 +29,11 @@ const TBInfo = () => {
       newDetails = [...details, index]
     }
     setDetails(newDetails)
+  }
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const toggleDelete = () => {
+    setDeleteModal(!deleteModal);
   }
 
   useEffect(() => {
@@ -48,7 +57,7 @@ const TBInfo = () => {
   const fields = [
     { key: 'name', _style: { width: '20%' } },
     { key: 'address' },
-    { key: 'subdistrict', _style: { width: '15%' } },
+    { key: 'subdistrict', _style: { width: '10%' } },
     { key: 'latitude', _style: { width: '5%' }, label: 'lat' },
     { key: 'longitude', _style: { width: '5%' }, label: 'long' },
     {
@@ -109,10 +118,29 @@ const TBInfo = () => {
                           Edit
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1"
-                          onClick={() => { deleteHealthFacilities(item.id) }}
+                          onClick={() => { toggleDelete() }}
                         >
                           Delete
                         </CButton>
+
+                        <CModal
+                          show={deleteModal}
+                          onClose={toggleDelete}
+                        >
+                          <CModalHeader closeButton>Hapus Data</CModalHeader>
+                          <CModalBody>
+                            Apakah anda ingin menghapus <strong>{item.name}</strong>?
+                          </CModalBody>
+                          <CModalFooter>
+                            <CButton color="danger"
+                              onClick={() => { deleteHealthFacilities(item.id) }}
+                            >Hapus</CButton>
+                            <CButton
+                              color="secondary"
+                              onClick={toggleDelete}
+                            >Kembali</CButton>
+                          </CModalFooter>
+                        </CModal>
                       </CCardBody>
                     </CCollapse>
                   )

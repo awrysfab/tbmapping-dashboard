@@ -8,7 +8,16 @@ import {
   CCardHeader,
   CDataTable,
   CCollapse,
-  CButton
+  CButton,
+  CModal,
+  CModalBody,
+  CModalHeader,
+  CModalFooter,
+  CForm,
+  CFormGroup,
+  CTextarea,
+  CLabel,
+  CInput
 } from '@coreui/react';
 
 const TBInfo = () => {
@@ -26,6 +35,11 @@ const TBInfo = () => {
     }
     setDetails(newDetails)
   }
+  const [editModal, setEditModal] = useState(false);
+  const toggleEdit = () => { setEditModal(!editModal); }
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const toggleDelete = () => { setDeleteModal(!deleteModal); }
 
   useEffect(() => {
     fetchTbInfos();
@@ -97,14 +111,70 @@ const TBInfo = () => {
                         <h4>
                           {item.title}
                         </h4>
-                        <CButton size="sm" color="info">
+                        <CButton size="sm" color="info"
+                          onClick={() => { toggleEdit() }}>
                           Edit
                         </CButton>
-                        <CButton size="sm" color="danger" className="ml-1" 
-                        onClick={() => { deleteTbInfos(item.id) }}
+                        <CButton size="sm" color="danger" className="ml-1"
+                          onClick={() => { toggleDelete() }}
                         >
                           Delete
                         </CButton>
+
+                        <CModal
+                          show={editModal}
+                          onClose={toggleEdit}
+                        >
+                          <CModalHeader closeButton>Edit Data</CModalHeader>
+                          <CModalBody>
+                            <CForm action="" method="post">
+                              <CFormGroup>
+                                <CLabel htmlFor="nf-email">Title</CLabel>
+                                <CInput
+                                  type="text"
+                                  id="nf-title"
+                                  name="nf-title"
+                                  placeholder={item.title}
+                                />
+                              </CFormGroup>
+                              <CFormGroup>
+                                <CLabel htmlFor="nf-description">Description</CLabel>
+                                <CTextarea
+                                  id="nf-description"
+                                  name="nf-description"
+                                  rows="9"
+                                  placeholder={item.description}
+                                />
+                              </CFormGroup>
+                            </CForm>
+                          </CModalBody>
+                          <CModalFooter>
+                            <CButton color="info">Edit</CButton>
+                            <CButton
+                              color="secondary"
+                              onClick={toggleEdit}
+                            >Cancel</CButton>
+                          </CModalFooter>
+                        </CModal>
+
+                        <CModal
+                          show={deleteModal}
+                          onClose={toggleDelete}
+                        >
+                          <CModalHeader closeButton>Hapus Data</CModalHeader>
+                          <CModalBody>
+                            Apakah anda ingin menghapus <strong>{item.title}</strong>?
+                          </CModalBody>
+                          <CModalFooter>
+                            <CButton color="danger"
+                              onClick={() => { deleteTbInfos(item.id) }}
+                            >Hapus</CButton>
+                            <CButton
+                              color="secondary"
+                              onClick={toggleDelete}
+                            >Kembali</CButton>
+                          </CModalFooter>
+                        </CModal>
                       </CCardBody>
                     </CCollapse>
                   )

@@ -8,7 +8,11 @@ import {
   CCardHeader,
   CDataTable,
   CCollapse,
-  CButton
+  CButton,
+  CModal,
+  CModalBody,
+  CModalHeader,
+  CModalFooter
 } from '@coreui/react';
 
 const TBIndex = () => {
@@ -25,6 +29,11 @@ const TBIndex = () => {
       newDetails = [...details, index]
     }
     setDetails(newDetails)
+  }
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const toggleDelete = () => {
+    setDeleteModal(!deleteModal);
   }
 
   useEffect(() => {
@@ -110,10 +119,29 @@ const TBIndex = () => {
                           Edit
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1"
-                          onClick={() => { deleteClusterAttribute(item.id) }}
+                          onClick={() => { toggleDelete() }}
                         >
                           Delete
                         </CButton>
+
+                        <CModal
+                          show={deleteModal}
+                          onClose={toggleDelete}
+                        >
+                          <CModalHeader closeButton>Hapus Data</CModalHeader>
+                          <CModalBody>
+                            Apakah anda ingin menghapus data kecamatan <strong>{item.subdistrict.name}</strong> tahun <strong>{item.year}</strong>?
+                          </CModalBody>
+                          <CModalFooter>
+                            <CButton color="danger"
+                              onClick={() => { deleteClusterAttribute(item.id) }}
+                            >Hapus</CButton>
+                            <CButton
+                              color="secondary"
+                              onClick={toggleDelete}
+                            >Kembali</CButton>
+                          </CModalFooter>
+                        </CModal>
                       </CCardBody>
                     </CCollapse>
                   )
