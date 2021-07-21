@@ -4,6 +4,8 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
+  CButton,
+  CButtonGroup,
 } from '@coreui/react';
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
@@ -12,20 +14,19 @@ import { CLUSTER_API_URL } from 'src/utils/ApiUrl';
 
 function Dashboard() {
   const [clusteringResults, setClusteringResults] = useState([]);
+  const [displayedYear, setdisplayedYear] = useState(2017);
 
   useEffect(() => {
-    fetchClusteringResult();
+    fetchClusteringResult(displayedYear);
   }, []);
 
-  async function fetchClusteringResult() {
-    const result = await axios.get(`${CLUSTER_API_URL}/2017`)
+  async function fetchClusteringResult(year) {
+    const result = await axios.get(`${CLUSTER_API_URL}/${year}`)
     setClusteringResults(result.data);
   }
 
   const maps = mapData.map((item, index) => {
     if (clusteringResults.length !== 0) {
-      console.log(item.features[0].properties.Kecamatan);
-      console.log(clusteringResults[index]);
       if (clusteringResults[index].cluster === 'Tinggi') {
         return <GeoJSON key={item.features[0].properties.Kecamatan} data={item}
           style={
@@ -35,7 +36,7 @@ function Dashboard() {
               "opacity": 0.65
             }
           } />
-      } else if(clusteringResults[index].cluster === 'Sedang'){
+      } else if (clusteringResults[index].cluster === 'Sedang') {
         return <GeoJSON key={item.features[0].properties.Kecamatan} data={item}
           style={
             {
@@ -61,16 +62,33 @@ function Dashboard() {
   return (
     <>
       <CCard>
-        {console.log(clusteringResults)}
         <CCardHeader>
-          Peta Tingkat Kerawanan Tuberkulosis
+          Peta Tingkat Kerawanan Tuberkulosis tahun {displayedYear}
         </CCardHeader>
         <CCardBody>
+          <CButtonGroup>
+            <CButton
+              color={displayedYear === 2017 ? "dark" : "light"}
+              onClick={() => { setdisplayedYear(2017); fetchClusteringResult(2017) }}>
+              2017
+            </CButton>
+            <CButton
+              color={displayedYear === 2018 ? "dark" : "light"}
+              onClick={() => { setdisplayedYear(2018); fetchClusteringResult(2018) }}>
+              2018
+            </CButton>
+            <CButton
+              color={displayedYear === 2019 ? "dark" : "light"}
+              onClick={() => { setdisplayedYear(2019); fetchClusteringResult(2019) }}>
+              2019
+            </CButton>
+          </CButtonGroup>
+
           <div id="mapid">
             <MapContainer
               center={[-6.9575, 111.8999]}
               zoom={10}
-              style={{ height: '70vh', width: '100wh' }}
+              style={{ height: '60vh', width: '100wh' }}
             >
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
