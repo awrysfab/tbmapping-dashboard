@@ -17,8 +17,7 @@ import {
 
 const TBInfo = () => {
   const [healthFacilities, setHealthFacilities] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
+  
   const [details, setDetails] = useState([])
   const toggleDetails = (index) => {
     const position = details.indexOf(index)
@@ -48,7 +47,7 @@ const TBInfo = () => {
   }
 
   async function deleteHealthFacilities(id) {
-    const result = await axios.delete(`${API_URL}/health-facilities/${id}`, {
+    await axios.delete(`${API_URL}/health-facilities/${id}`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
     window.location.reload();

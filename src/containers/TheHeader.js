@@ -10,7 +10,6 @@ import {
   CSubheader,
   CBreadcrumbRouter
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 // routes config
 import routes from '../routes'

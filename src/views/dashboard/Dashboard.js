@@ -18,7 +18,7 @@ function Dashboard() {
 
   useEffect(() => {
     fetchClusteringResult(displayedYear);
-  }, []);
+  }, [displayedYear]);
 
   async function fetchClusteringResult(year) {
     const result = await axios.get(`${CLUSTER_API_URL}/${year}`)

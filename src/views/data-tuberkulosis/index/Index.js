@@ -48,7 +48,7 @@ const TBIndex = () => {
   }
 
   async function deleteClusterAttribute(id) {
-    const result = await axios.delete(`${API_URL}/cluster-attributes/${id}`, {
+    await axios.delete(`${API_URL}/cluster-attributes/${id}`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
     window.location.reload();

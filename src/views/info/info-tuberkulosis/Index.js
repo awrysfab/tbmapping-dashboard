@@ -14,16 +14,21 @@ import {
   CModalHeader,
   CModalFooter,
   CForm,
-  CFormGroup,
   CTextarea,
   CLabel,
   CInput
 } from '@coreui/react';
 
 const TBInfo = () => {
+  const [idEdit, setIdEdit] = useState(0);
+  const [titleEdit, setTitleEdit] = useState("");
+  const [descriptionEdit, setDescriptionEdit] = useState("");
+
+  const [titleAdd, setTitleAdd] = useState("");
+  const [descriptionAdd, setDescriptionAdd] = useState("");
+
   const [tbInfos, settbInfos] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
+
   const [details, setDetails] = useState([])
   const toggleDetails = (index) => {
     const position = details.indexOf(index)
@@ -35,6 +40,10 @@ const TBInfo = () => {
     }
     setDetails(newDetails)
   }
+
+  const [addModal, setAddModal] = useState(false);
+  const toggleAdd = () => { setAddModal(!addModal); }
+
   const [editModal, setEditModal] = useState(false);
   const toggleEdit = () => { setEditModal(!editModal); }
 
@@ -45,6 +54,14 @@ const TBInfo = () => {
     fetchTbInfos();
   }, []);
 
+  const handleAddSubmit = (event) => {
+    addTbInfos({title: titleAdd, description: descriptionAdd })
+  }
+
+  const handleEditSubmit = (event) => {
+    updateTbInfos({ id: idEdit, title: titleEdit, description: descriptionEdit })
+  }
+
   async function fetchTbInfos() {
     const result = await axios.get(`${API_URL}/tb-infos`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
@@ -52,8 +69,26 @@ const TBInfo = () => {
     settbInfos(result.data.data);
   }
 
+  async function addTbInfos({ title, description }) {
+    await axios.post(`${API_URL}/tb-infos`, {
+      title,
+      description,
+    }, {
+      headers: { "Authorization": `Bearer ${getToken()}` }
+    })
+  }
+
+  async function updateTbInfos({ id, title, description }) {
+    await axios.put(`${API_URL}/tb-infos/${id}`, {
+      title,
+      description,
+    }, {
+      headers: { "Authorization": `Bearer ${getToken()}` }
+    })
+  }
+
   async function deleteTbInfos(id) {
-    const result = await axios.delete(`${API_URL}/tb-infos/${id}`, {
+    await axios.delete(`${API_URL}/tb-infos/${id}`, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
     window.location.reload();
@@ -77,6 +112,52 @@ const TBInfo = () => {
           Info Tuberkulosis
         </CCardHeader>
         <CCardBody>
+          <CButton size="m" color="info"
+            onClick={() => {
+              toggleAdd();
+            }}>
+            Tambah Data
+          </CButton>
+
+          <CModal
+            show={addModal}
+            onClose={toggleAdd}
+          >
+            <CForm
+              onSubmit={handleAddSubmit}
+            >
+              <CModalHeader closeButton>Tambah Data</CModalHeader>
+              <CModalBody>
+                <CLabel htmlFor={`title-add`}>Title</CLabel>
+                <CInput
+                  type="text"
+                  id={`title-add`}
+                  name="title"
+                  defaultValue={titleEdit}
+                  onChange={e => setTitleAdd(e.target.value)}
+                />
+                <CLabel htmlFor={`description-add`}>Description</CLabel>
+                <CTextarea
+                  id={`description-add`}
+                  name="description"
+                  rows="9"
+                  defaultValue={descriptionEdit}
+                  onChange={e => setDescriptionAdd(e.target.value)}
+                />
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="info"
+                  type="submit"
+                >Tambah</CButton>
+                <CButton
+                  color="secondary"
+                  onClick={toggleAdd}
+                >Cancel</CButton>
+              </CModalFooter>
+            </CForm>
+          </CModal>
+          <br></br>
+          
           <CDataTable
             items={tbInfos}
             fields={fields}
@@ -112,7 +193,12 @@ const TBInfo = () => {
                           {item.title}
                         </h4>
                         <CButton size="sm" color="info"
-                          onClick={() => { toggleEdit() }}>
+                          onClick={() => {
+                            toggleEdit();
+                            setIdEdit(item.id);
+                            setTitleEdit(item.title);
+                            setDescriptionEdit(item.description);
+                          }}>
                           Edit
                         </CButton>
                         <CButton size="sm" color="danger" className="ml-1"
@@ -120,41 +206,42 @@ const TBInfo = () => {
                         >
                           Delete
                         </CButton>
-
                         <CModal
                           show={editModal}
                           onClose={toggleEdit}
                         >
-                          <CModalHeader closeButton>Edit Data</CModalHeader>
-                          <CModalBody>
-                            <CForm action="" method="post">
-                              <CFormGroup>
-                                <CLabel htmlFor="nf-email">Title</CLabel>
-                                <CInput
-                                  type="text"
-                                  id="nf-title"
-                                  name="nf-title"
-                                  placeholder={item.title}
-                                />
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CLabel htmlFor="nf-description">Description</CLabel>
-                                <CTextarea
-                                  id="nf-description"
-                                  name="nf-description"
-                                  rows="9"
-                                  placeholder={item.description}
-                                />
-                              </CFormGroup>
-                            </CForm>
-                          </CModalBody>
-                          <CModalFooter>
-                            <CButton color="info">Edit</CButton>
-                            <CButton
-                              color="secondary"
-                              onClick={toggleEdit}
-                            >Cancel</CButton>
-                          </CModalFooter>
+                          <CForm
+                            onSubmit={handleEditSubmit}
+                          >
+                            <CModalHeader closeButton>Edit Data</CModalHeader>
+                            <CModalBody>
+                              <CLabel htmlFor={`title` + item.id}>Title</CLabel>
+                              <CInput
+                                type="text"
+                                id={`title` + item.id}
+                                name="title"
+                                defaultValue={titleEdit}
+                                onChange={e => setTitleEdit(e.target.value)}
+                              />
+                              <CLabel htmlFor={`description` + item.id}>Description</CLabel>
+                              <CTextarea
+                                id={`description` + item.id}
+                                name="description"
+                                rows="9"
+                                defaultValue={descriptionEdit}
+                                onChange={e => setDescriptionEdit(e.target.value)}
+                              />
+                            </CModalBody>
+                            <CModalFooter>
+                              <CButton color="info"
+                                type="submit"
+                              >Edit</CButton>
+                              <CButton
+                                color="secondary"
+                                onClick={toggleEdit}
+                              >Cancel</CButton>
+                            </CModalFooter>
+                          </CForm>
                         </CModal>
 
                         <CModal
