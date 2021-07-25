@@ -55,7 +55,7 @@ const TBInfo = () => {
   }, []);
 
   const handleAddSubmit = (event) => {
-    addTbInfos({title: titleAdd, description: descriptionAdd })
+    addTbInfos({ title: titleAdd, description: descriptionAdd })
   }
 
   const handleEditSubmit = (event) => {
@@ -70,21 +70,29 @@ const TBInfo = () => {
   }
 
   async function addTbInfos({ title, description }) {
-    await axios.post(`${API_URL}/tb-infos`, {
+    const result = await axios.post(`${API_URL}/tb-infos`, {
       title,
       description,
     }, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
+    if(result.status === 200){
+      toggleAdd()
+      window.location.reload()
+    }
   }
 
   async function updateTbInfos({ id, title, description }) {
-    await axios.put(`${API_URL}/tb-infos/${id}`, {
+    const result = await axios.put(`${API_URL}/tb-infos/${id}`, {
       title,
       description,
     }, {
       headers: { "Authorization": `Bearer ${getToken()}` }
     })
+    if(result.status === 200){
+      toggleEdit()
+      window.location.reload()
+    }
   }
 
   async function deleteTbInfos(id) {
@@ -124,7 +132,7 @@ const TBInfo = () => {
             onClose={toggleAdd}
           >
             <CForm
-              onSubmit={handleAddSubmit}
+            // onSubmit={handleAddSubmit}
             >
               <CModalHeader closeButton>Tambah Data</CModalHeader>
               <CModalBody>
@@ -147,7 +155,8 @@ const TBInfo = () => {
               </CModalBody>
               <CModalFooter>
                 <CButton color="info"
-                  type="submit"
+                  onClick={handleAddSubmit}
+                // type="submit"
                 >Tambah</CButton>
                 <CButton
                   color="secondary"
@@ -157,7 +166,7 @@ const TBInfo = () => {
             </CForm>
           </CModal>
           <br></br>
-          
+
           <CDataTable
             items={tbInfos}
             fields={fields}
@@ -211,7 +220,7 @@ const TBInfo = () => {
                           onClose={toggleEdit}
                         >
                           <CForm
-                            onSubmit={handleEditSubmit}
+                            // onSubmit={handleEditSubmit}
                           >
                             <CModalHeader closeButton>Edit Data</CModalHeader>
                             <CModalBody>
@@ -234,7 +243,8 @@ const TBInfo = () => {
                             </CModalBody>
                             <CModalFooter>
                               <CButton color="info"
-                                type="submit"
+                              onClick={handleEditSubmit}
+                                // type="submit"
                               >Edit</CButton>
                               <CButton
                                 color="secondary"

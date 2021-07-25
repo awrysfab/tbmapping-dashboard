@@ -19,7 +19,7 @@ const TheHeaderDropdown = (props) => {
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
           <CImg
-            src={'avatars/6.jpg'}
+            src={'avatars/avatar.png'}
             className="c-avatar-img"
             alt="admin@bootstrapmaster.com"
           />
@@ -34,10 +34,10 @@ const TheHeaderDropdown = (props) => {
         >
           <strong>Akun</strong>
         </CDropdownItem>
-        <CDropdownItem>
+        {/* <CDropdownItem>
           <CIcon name="cil-user" className="mfe-2" /> 
           Profil
-        </CDropdownItem>
+        </CDropdownItem> */}
         <CDropdownItem onClick={
           () => {
             props.history.push('/login');

@@ -103,9 +103,9 @@ const TBDensity = () => {
                           Kecamatan {item.subdistrict.name}
                         </h4>
                         <p className="text-muted">Tahun {item.year}</p>
-                        <CButton size="sm" color="info">
+                        {/* <CButton size="sm" color="info">
                           Edit
-                        </CButton>
+                        </CButton> */}
                         <CButton size="sm" color="danger" className="ml-1"
                           onClick={() => { deleteClusterAttribute(item.id) }}
                         >
